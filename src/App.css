@@ -1,19 +1,17 @@
-img {
-    height: 430px;
-    border-radius: 50px;
-    margin:20px ;
+.informacion {
+    margin-top: 30px !important;
+    display: flex !important;
 }
 
-.informacion-mascota{
-    font-size: medium;
-
+.informacion-mascota {
+    margin-right: 20px !important;
 }
 
-.contenedor {
-    text-align: center;
-    padding: 40px;
-    font-family: Lato, sans-serif;
-    font-weight: 400;
-    line-height: 1.5rem;
-    display: flex;
+.informacion-mascota-banner {
+    width: 90%;
+}
+
+.boton-registrar { 
+    margin-left: 10px !important;
+    margin-top: 9px !important;
 }
