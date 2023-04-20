@@ -8,7 +8,8 @@
 }
 
 .informacion-mascota-banner {
-    width: 90%;
+    width: 93%;
+    min-height: fit-content;
 }
 
 .boton-registrar { 

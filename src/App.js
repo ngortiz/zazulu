@@ -71,7 +71,9 @@ function App() {
 
   return (
     <>
+     <Container fixed>
       <img alt='banner' src={require(`./imagenes/banner.jpg`)} className="informacion-mascota-banner" />
+     </Container>
 
       <Container fixed className="formulario">
         <form>
