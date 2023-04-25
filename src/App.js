@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Container, TextField, Button } from '@mui/material';
 import InformacionMascota from './componentes/InformacionMascota';
+import ImageUploader from 'react-images-upload';
 import './App.css'
 
 const animales = [
@@ -41,16 +42,17 @@ function App() {
   const [ciudad, setCiudad] = useState('')
   const [descripcion, setDescripcion] = useState('')
   const [listaAnimales, setListaAnimales] = useState(animales)
-
+  const [imagen, setImagen] = useState()
+  
   const registrar = (e) => {
-    const nuevoAnimal ={
+    const nuevoAnimal = {
       imagen: 'gatito02.jpg',
       nombre: nombre,
       sexo: sexo,
       ciudad: ciudad,
       descripcion: descripcion,
     }
-    const nuevosAnimales = [nuevoAnimal,...listaAnimales];
+    const nuevosAnimales = [nuevoAnimal, ...listaAnimales];
     setListaAnimales(nuevosAnimales)
   }
 
@@ -58,30 +60,46 @@ function App() {
     setNombre(e.target.value);
   }
 
-  const setearSexo= (e) => {
+  const setearSexo = (e) => {
     setSexo(e.target.value);
   }
-  const setearDescripcion= (e) => {
+  const setearDescripcion = (e) => {
     setDescripcion(e.target.value);
   }
 
-  const setearCiudad= (e) => {
+  const setearCiudad = (e) => {
     setCiudad(e.target.value);
+  }
+
+
+
+  const subirImagen = (imagenes, pictureDataURLs) => {
+    console.log(imagenes);
+    console.log(pictureDataURLs)
+    setImagen(pictureDataURLs[0]);
   }
 
   return (
     <>
-     <Container fixed>
-      <img alt='banner' src={require(`./imagenes/banner.jpg`)} className="informacion-mascota-banner" />
-     </Container>
+      <Container fixed>
+        <img alt='banner' src={require(`./imagenes/banner.jpg`)} className="informacion-mascota-banner" />
+      </Container>
 
       <Container fixed className="formulario">
         <form>
-          <TextField id="nombre" label="Nombre" variant="outlined" onChange={setearNombre}/>
-          <TextField id="sexo" label="Sexo" variant="outlined"  onChange={setearSexo}/>
-          <TextField id="descripcion" label="Descripcion" variant="outlined" onChange={setearDescripcion}/>
-          <TextField id="ciudad" label="Ciudad" variant="outlined" onChange={setearCiudad}/>
+          <TextField id="nombre" label="Nombre" variant="outlined" onChange={setearNombre} />
+          <TextField id="sexo" label="Sexo" variant="outlined" onChange={setearSexo} />
+          <TextField id="descripcion" label="Descripcion" variant="outlined" onChange={setearDescripcion} />
+          <TextField id="ciudad" label="Ciudad" variant="outlined" onChange={setearCiudad} />
           <Button variant="contained" className='boton-registrar' onClick={registrar}>Agregar</Button>
+          <ImageUploader
+                withIcon={true}
+                buttonText='Subir una imagen'
+                onChange={subirImagen}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+                withPreview={true}
+            />
         </form>
       </Container>
 
