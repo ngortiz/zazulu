@@ -1,59 +1,42 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Formulario from "./componentes/Formulario";
 
 import "./App.css";
 import Banner from "./componentes/Banner";
 import ListaMascotas from "./componentes/ListaMastocas";
+import axios from "axios";
 
-const animales = [
-  {
-    imagen: "perro01.jpg",
-    nombre: "Pepe",
-    sexo: "Macho",
-    ciudad: "Encarnacion",
-    descripcion: "De raza",
-  },
-  {
-    imagen: "perro02.jpg",
-    nombre: "Travolta",
-    sexo: "Macho",
-    ciudad: "Encarnacion",
-    descripcion: "De raza",
-  },
-  {
-    imagen: "gatito01.jpg",
-    nombre: "Zari",
-    sexo: "Hembra",
-    ciudad: "Encarnacion",
-    descripcion: "De raza",
-  },
-  {
-    imagen: "gatito02.jpg",
-    nombre: "Pepito",
-    sexo: "Macho",
-    ciudad: "Encarnacion",
-    descripcion: "De raza",
-  },
-];
 function App() {
   const [nombre, setNombre] = useState("");
   const [sexo, setSexo] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [listaAnimales, setListaAnimales] = useState(animales);
+  const [listaMascotas, setListaMascotas] = useState([]);
   const [imagen, setImagen] = useState();
 
-  const registrar = (e) => {
-    const nuevoAnimal = {
+  const obtenerListaMascota = async () => {
+    const response = await axios.get("http://localhost:3001/lista-mascotas");
+    setListaMascotas(response.data);
+  };
+
+  useEffect(() => {
+    obtenerListaMascota();
+  }, []);
+
+  const registrar = async (e) => {
+    const nuevaMascota = {
       imagen: "gatito02.jpg",
       nombre: nombre,
       sexo: sexo,
       ciudad: ciudad,
       descripcion: descripcion,
     };
-    const nuevosAnimales = [nuevoAnimal, ...listaAnimales];
-    setListaAnimales(nuevosAnimales);
+    const response = await axios.post(
+      "http://localhost:3001/guardar-mascota",
+      nuevaMascota
+    );
+    obtenerListaMascota();
   };
 
   const setearNombre = (e) => {
@@ -88,7 +71,7 @@ function App() {
         subirImagen={subirImagen}
         registrar={registrar}
       />
-      <ListaMascotas listaAnimales={listaAnimales} />
+      <ListaMascotas listaAnimales={listaMascotas} />
     </>
   );
 }
